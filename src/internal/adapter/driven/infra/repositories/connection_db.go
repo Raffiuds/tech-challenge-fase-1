@@ -16,7 +16,7 @@ func NewConnection() *pgxpool.Pool {
 
 	pool, err := pgxpool.New(context.Background(), psqlInfo)
 	if err != nil {
-		log.Printf("")
+		log.Println("Unable to connect to database", err)
 		panic(1)
 	}
 
