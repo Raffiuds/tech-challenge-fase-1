@@ -4,20 +4,21 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"tech-challenge-fase-1/internal/adapter/driven/infra/config"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewConnection() *pgx.Conn {
+func NewConnection() *pgxpool.Pool {
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
-		Host, Port, User, Password, DBname)
+		config.DB_HOST, config.DB_POST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
 
-	conn, err := pgx.Connect(context.Background(), psqlInfo)
+	pool, err := pgxpool.New(context.Background(), psqlInfo)
 	if err != nil {
 		log.Printf("")
 		panic(1)
 	}
 
-	return conn
+	return pool
 }
